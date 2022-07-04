@@ -1,5 +1,8 @@
+from sqlite3 import connect
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
+
+db = 'Job_Tracker_Schema'
 
 class Application:
     def __init__(self, data):
@@ -15,19 +18,27 @@ class Application:
 
     @classmethod
     def add_application(cls, data):
-        pass
+        query = "INSERT INTO applications (position, location, status, comments, link, linkedin_follow) VALUES (%(position)s, %(location)s, %(status)s, %(comments)s, %(link)s, %(linkedin_follow)s)"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
 
     @classmethod
     def get_application(cls, data):
-        pass
+        query = "SELECT * FROM applications WHERE id = %(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
 
     @classmethod
     def updated_application(cls, data):
-        pass
+        query = "UPDATE applications SET position=%(position)s, location=%(location)s, status=%(status)s, comments=%(comments)s, link=%(link)s, linkedin_follow=%(linkedin_follow)s WHERE id=%(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
 
     @classmethod
     def delete_application(cls, data):
-        pass
+        query = "DELETE FROM applications WHERE id=%(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
 
     @staticmethod
     def validate_application(application):

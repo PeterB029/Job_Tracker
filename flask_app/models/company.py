@@ -1,6 +1,8 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 
+db = 'Job_Tracker_Schema'
+
 class Company:
     def __init__(self, data):
         self.id = data['id']
@@ -10,7 +12,9 @@ class Company:
 
     @classmethod
     def get_company(cls, data):
-        pass
+        query = "SELECT * FROM companies WHERE id = %(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
 
     @staticmethod
     def validate_application(application):
