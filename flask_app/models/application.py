@@ -18,12 +18,18 @@ class Application:
 
     @classmethod
     def add_application(cls, data):
-        query = "INSERT INTO applications (position, location, status, comments, link, linkedin_follow) VALUES (%(position)s, %(location)s, %(status)s, %(comments)s, %(link)s, %(linkedin_follow)s)"
+        query = "INSERT INTO applications (position, location, status, comments, link, linkedin_follow, user_id, company_id) VALUES (%(position)s, %(location)s, %(status)s, %(comments)s, %(link)s, %(linkedin_follow)s, %(user_id)s, %(company_id)s)"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
     @classmethod
-    def get_application(cls, data):
+    def get_all_applications(cls):
+        query = "SELECT * FROM applications"
+        results = connectToMySQL(db).query_db(query)
+        return results
+
+    @classmethod
+    def get_single_application(cls, data):
         query = "SELECT * FROM applications WHERE id = %(id)s"
         results = connectToMySQL(db).query_db(query, data)
         return results

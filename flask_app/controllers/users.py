@@ -1,5 +1,6 @@
 from flask_app import app
 from flask_app.models.user import User
+from flask_app.models.application import Application
 from flask import render_template, redirect, request, session, flash
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -51,8 +52,8 @@ def success():
     if 'user_id' not in session:
         flash("You must be logged in to view this page")
         return redirect("/")
-    #pass in data?
-    return render_template('dashboard.html')
+    applications = Application.get_all_applications()
+    return render_template('dashboard.html', all_applications = applications)
 
 @app.route('/logout')
 def logout():
