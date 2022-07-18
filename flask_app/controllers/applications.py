@@ -44,15 +44,21 @@ def update_application():
 @app.route('/application/<int:id>')
 def single_application_page(id):
     #pass in data - application: id
-    application = Application.get_single_application(id)
+    data = {
+        "id": id
+    }
+    application = Application.get_single_application(data)
     return render_template('applicaion_read.html', single_application = application)
 
 @app.route('/application', defaults={'status': 'Applied'})
-@app.route('/application/<status>')
-def status_page():
+@app.route('/application/<string:status>')
+def status_page(status):
     #pass in data - applications status
-
-    return render_template('status_page.html')
+    data = {
+        "status": status
+    }
+    status = Application.get_application_by_status(data)
+    return render_template('status_page.html', application_status = status)
 
 #Perhaps we can remove all this and instead have a variable in the url for the status we want to pull up.
 # @app.route('/application/status/interview_scheduled')

@@ -35,6 +35,12 @@ class Application:
         return results
 
     @classmethod
+    def get_application_by_status(cls, data):
+        query = "SELECT * FROM applications WHERE status = %(status)"
+        results = connectToMySQL(db).query_db(query, data)
+        return results
+
+    @classmethod
     def updated_application(cls, data):
         query = "UPDATE applications SET position=%(position)s, location=%(location)s, status=%(status)s, comments=%(comments)s, link=%(link)s, linkedin_follow=%(linkedin_follow)s WHERE id=%(id)s"
         results = connectToMySQL(db).query_db(query, data)
